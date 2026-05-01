@@ -1,16 +1,74 @@
-# React + Vite
+# Agent Run Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Tailwind UI that visualizes a live AI agent workflow, including task execution, parallel processing, retries, cancellations, and final output.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to Run Locally
 
-## React Compiler
+```bash
+npm install
+npm run dev
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Open:
 
-## Expanding the ESLint configuration
+```
+http://localhost:5173
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Switching Between Fixtures
+
+Fixtures are located in:
+
+```
+src/mock/fixtures/
+```
+
+To switch between runs:
+
+### In `useRunSimulation.js`
+
+```js
+import runSuccess from "../mock/fixtures/run_success";
+import runError from "../mock/fixtures/run_error";
+```
+
+Then change:
+
+```js
+const events = runSuccess;
+// OR
+const events = runError;
+```
+
+---
+
+## What This UI Shows
+
+* Task lifecycle (pending → running → complete / failed / cancelled)
+* Parallel task execution
+* Tool calls and results
+* Partial outputs (streaming)
+* Retry behavior (failed → running)
+* Final synthesized output
+
+---
+
+## Known Gaps / Improvements (with more time)
+
+* **Timeline visualization**: Could add a stronger visual timeline for better execution clarity
+* **Collapsible logs**: Tool calls could be collapsible to reduce noise
+* **Better dependency visualization**: Explicit UI indicators for task dependencies
+* **Animations**: Smooth transitions for task updates
+* **Accessibility**: Improve keyboard navigation and ARIA labels
+* **Real backend integration**: Replace mock emitter with WebSocket or SSE
+
+---
+
+## 🛠 Tech Stack
+
+* React (hooks, useReducer)
+* Tailwind CSS
