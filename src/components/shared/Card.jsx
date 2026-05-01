@@ -1,9 +1,11 @@
-import React from 'react'
-
-const Card = () => {
+const Card = ({ children, className = '' }) => {
   return (
-    <div>Card</div>
+    <div
+      className={`bg-surface-2 border border-border rounded-lg ${className}`}
+    >
+      {children}
+    </div>
   )
 }
 
-export default Card
+export default Card;

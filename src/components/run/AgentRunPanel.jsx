@@ -1,9 +1,31 @@
-import React from 'react'
+import RunHeader from "./RunHeader";
+import FinalOutput from "./FinalOutput";
+import EmptyState from "./EmptyState";
+import TaskList from "../task/TaskList";
 
-const AgentRunPanel = () => {
+export default function AgentRunPanel({ state = {} }) {
+  const { run = null, tasks = {}, finalOutput = null } = state;
+
+  const isIdle      = !run || run.status === "idle";
+  const hasTasks    = Object.keys(tasks).length > 0;
+  const showOutput  = run?.status === "complete" || run?.status === "failed";
+
   return (
-    <div>AgentRunPanel</div>
-  )
-}
+    <div className="mx-auto max-w-5xl w-full px-4 py-8 space-y-6">
+      {/* Always render header — it handles its own empty/idle state */}
+      <RunHeader run={run} />
 
-export default AgentRunPanel
+      {isIdle || !hasTasks ? (
+        <EmptyState status={run?.status} />
+      ) : (
+        <>
+          <TaskList tasks={tasks} />
+
+          {showOutput && (
+            <FinalOutput output={finalOutput} status={run?.status} />
+          )}
+        </>
+      )}
+    </div>
+  );
+}
